@@ -33,7 +33,7 @@ const InvoiceForm = ({ data, onChange, onAddItem, onRemoveItem, onPreview, onDow
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex justify-between items-center w-full md:w-auto">
                     <h2 className="text-2xl font-bold tracking-tight">Invoice Generator</h2>
-                    <img src="/header-logo.png" alt="Symbol Advertising" className="h-12 md:hidden object-contain" />
+                    <img src="/get-logo.png" alt="Great Escapes Tourism" className="h-12 md:hidden object-contain" />
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                     <div className="flex items-center space-x-2">
