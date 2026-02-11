@@ -29,34 +29,52 @@ const PreviewModal = ({ data, documentType, onClose }) => {
     }, []);
 
     const handleDownload = async () => {
-        // Create a clone of the element to render it in a predictable environment
         const element = previewRef.current;
-        const clone = element.cloneNode(true);
+        if (!element) return;
 
-        // Create a container that forces desktop width, placed off-screen
+        // Create a temporary container for the capture to ensure consistent rendering
         const container = document.createElement('div');
         container.style.position = 'fixed';
         container.style.top = '-10000px';
         container.style.left = '-10000px';
-        container.style.width = '794px'; // Force A4 width explicitly
-        container.style.height = 'auto';
-        container.style.zIndex = '-1000';
-        container.style.background = 'white'; // Ensure background is present
+        // Use the exact width from CSS (210mm)
+        container.style.width = '210mm';
+        container.style.minHeight = '297mm'; // A4 min-height
+        container.style.backgroundColor = '#ffffff';
+        container.style.zIndex = '-9999';
+
+        // Clone the preview element
+        const clone = element.cloneNode(true);
+        // Reset margins on the clone to ensure it fits the container exactly
+        clone.style.margin = '0';
+        clone.style.boxShadow = 'none'; // Remove shadow for print
 
         container.appendChild(clone);
         document.body.appendChild(container);
 
         try {
-            // Create canvas from the cloned element
-            const canvas = await html2canvas(clone, {
-                scale: 3, // Slightly reduced scale to prevent memory crashes on mobile while maintaining 300dpi+ quality roughly
+            // Wait a moment for DOM to settle (though usually synchronous for simple appends)
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            // Calculate the full scroll height of the content
+            const fullHeight = container.scrollHeight;
+            const fullWidth = container.scrollWidth;
+
+            const canvas = await html2canvas(container, {
+                scale: 2, // Retain 2x scale for quality
                 useCORS: true,
                 logging: false,
                 allowTaint: true,
                 backgroundColor: '#ffffff',
-                imageTimeout: 0,
-                windowWidth: 794,
-                width: 794, // Explicitly tell html2canvas the capture width
+                // Crucial: Set distinct width/height to the full content size
+                width: fullWidth,
+                height: fullHeight,
+                windowWidth: fullWidth,
+                windowHeight: fullHeight,
+                x: 0,
+                y: 0,
+                scrollX: 0,
+                scrollY: 0
             });
 
             const imgData = canvas.toDataURL('image/png', 1.0);
@@ -65,21 +83,37 @@ const PreviewModal = ({ data, documentType, onClose }) => {
             const pdfWidth = 210;
             const pdfHeight = 297;
 
-            const pdf = new jsPDF('p', 'mm', 'a4', true);
+            // Create PDF
+            const pdf = new jsPDF('p', 'mm', 'a4');
 
-            // Calculate height to maintain aspect ratio, although A4 is fixed
+            // Calculate image height in PDF units (maintaining aspect ratio)
             const imgProps = pdf.getImageProperties(imgData);
             const pdfImageHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfImageHeight, undefined, 'FAST');
+            // Render PDF pages
+            const pageHeight = pdfHeight;
+            let heightLeft = pdfImageHeight;
+            let position = 0;
+
+            // Add first page
+            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfImageHeight);
+            heightLeft -= pageHeight;
+
+            // Add subsequent pages if content overflows
+            while (heightLeft > 0) {
+                position -= pageHeight; // Shift image up to show next section
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfImageHeight);
+                heightLeft -= pageHeight;
+            }
 
             const fileName = documentType === 'invoice' ? 'Invoice' : 'Quotation';
             pdf.save(`${fileName}_${data.quoteNo || 'Draft'}.pdf`);
+
         } catch (error) {
-            console.error('PDF generation failed:', error);
+            console.error('PDF generation error:', error);
             alert('Failed to generate PDF. Please try again.');
         } finally {
-            // Cleanup the temporary container
             document.body.removeChild(container);
         }
     };
