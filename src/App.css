@@ -1,0 +1,247 @@
+/* Invoice Preview Styles (A4 Size) */
+.invoice-preview-container {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  padding: 10mm;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  position: relative;
+  font-family: 'Arial', sans-serif;
+  font-size: 11pt;
+  line-height: 1.3;
+  color: #333;
+}
+
+/* Header */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.invoice-title {
+  text-align: right;
+  color: #3b5e91;
+  /* Corporate Blue */
+  font-size: 32pt;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.header-blue-line {
+  border-top: 2px solid #3b5e91;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.company-info {
+  margin-bottom: 20px;
+}
+
+.company-name {
+  color: #4472c4;
+  /* Blue */
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.company-slogan {
+  color: #3b5e91;
+  font-size: 10pt;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.company-contact {
+  color: #3b5e91;
+  font-weight: bold;
+}
+
+.invoice-meta {
+  text-align: right;
+  font-weight: bold;
+}
+
+/* Client Section */
+.client-section {
+  border-top: 2px solid #3b5e91;
+  border-bottom: 2px solid #3b5e91;
+  padding: 5px 0;
+  margin-bottom: 30px;
+}
+
+.client-label {
+  font-weight: bold;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 10pt;
+}
+
+.client-name {
+  font-weight: bold;
+  font-size: 12pt;
+  margin-top: 2px;
+}
+
+/* Job Details Table */
+.job-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.job-details-table th,
+.job-details-table td {
+  border: none;
+  padding: 5px;
+}
+
+/* Three columns with gaps */
+.job-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.job-box-header {
+  background-color: #5b6f82;
+  /* Muted Blue/Gray */
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.job-box-content {
+  background-color: #dbe5f1;
+  /* Light Blue/Gray */
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #c00000;
+  /* Red text for content */
+  min-height: 20px;
+}
+
+/* Main Items Table */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.items-table th {
+  background-color: #4b6a89;
+  /* Darker Blue Gray */
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.items-table td {
+  padding: 5px;
+  vertical-align: top;
+}
+
+.items-table tr.even-row {
+  background-color: #eff3f9;
+}
+
+.items-table tr.odd-row {
+  background-color: white;
+}
+
+.col-date {
+  width: 15%;
+  font-weight: bold;
+}
+
+.col-desc {
+  width: 65%;
+  font-weight: bold;
+  color: #333;
+}
+
+.col-total {
+  width: 20%;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Banking Section */
+.banking-container {
+  margin-top: 20px;
+  font-size: 9pt;
+  color: #4472c4;
+  font-weight: bold;
+}
+
+.banking-title {
+  color: black;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.banking-line {
+  margin-bottom: 2px;
+}
+
+/* Totals */
+.totals-area {
+  margin-top: 10px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: flex-end;
+  background-color: #dbe5f1;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.total-label {
+  margin-right: 20px;
+  color: #4b6a89;
+}
+
+/* Footer */
+.footer-bar {
+  background-color: #c00000;
+  /* Red */
+  color: white;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 9pt;
+}
+
+.payable-text {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.stamp-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  gap: 20px;
+}
+
+.stamp-placeholder {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
