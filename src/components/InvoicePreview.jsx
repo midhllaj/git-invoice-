@@ -50,7 +50,7 @@ const InvoicePreview = forwardRef(({ data, documentType = 'quotation' }, ref) =>
                 <div className="company-info">
                     <div className="company-name">Great Escapes Tourism</div>
                     <div className="company-slogan">Dreams Come True</div>
-                    <div className="company-contact">Tel : 00971 4 341 5949</div>
+                    <div className="company-contact">Contact No: +97150 4274260</div>
                 </div>
                 <div className="invoice-meta">
                     <div>{formatDate(data.date).toUpperCase()}</div> {/* Using date from data, formatted to have month name if possible but sticking to DD/MM/YYYY for now or Custom format */}
